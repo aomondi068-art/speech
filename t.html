@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Oval Office Welcome</title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --navy: #0a192f;
+            --white: #ffffff;
+            --crimson: #990000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: linear-gradient(135deg, #112240 0%, #0a192f 100%);
+            border: 3px solid var(--gold);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .seal {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--navy);
+            border: 4px double var(--navy);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #8892b0;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            padding: 12px 20px;
+            width: 70%;
+            max-width: 400px;
+            border: 2px solid var(--gold);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        input[type="text"]:focus {
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn {
+            background-color: var(--crimson);
+            color: white;
+            border: 2px solid var(--gold);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .dialogue-box {
+            margin-top: 30px;
+            min-height: 150px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .avatar {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: nod 2s infinite alternate ease-in-out;
+            display: none;
+        }
+
+        @keyframes nod {
+            0% { transform: translateY(0) scaleX(1); }
+            100% { transform: translateY(-5px) scaleX(1.02); }
+        }
+
+        .speech-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #e6f1ff;
+            max-width: 600px;
+        }
+
+        .badge-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            padding: 5px 12px;
+            background: rgba(214, 171, 55, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="seal">★ 45/47 ★</div>
+        <h1>The Oval Office</h1>
+        <p class="subtitle">Experience a Tremendous, Historic Welcome</p>
+        
+        <div class="input-group">
+            <input type="text" id="guestName" placeholder="Enter Guest Name..." autocomplete="off">
+        </div>
+        <button class="btn" onclick="welcomeGuest()">Receive Greeting</button>
+
+        <div class="dialogue-box" id="dialogueBox">
+            <div class="avatar" id="avatar">🇺🇸👔</div>
+            <p class="speech-text" id="speechText">Enter your name above to enter the beautiful, luxurious Oval Office.</p>
+        </div>
+
+        <div class="badge-container">
+            <span class="badge">100% Tremendous</span>
+            <span class="badge">Huge Turnout</span>
+            <span class="badge">Very Special</span>
+        </div>
+    </div>
+
+    <script>
+        const quotes = [
+            "Look who it is! Look at [NAME]. Nobody covers a room like [NAME], believe me. Truly fantastic to have here to pick left over to your dog disgusting"
+        ];
+
+        function welcomeGuest() {
+            const nameInput = document.getElementById('guestName').value.trim();
+            const speechText = document.getElementById('speechText');
+            const avatar = document.getElementById('avatar');
+            
+            if (nameInput === "") {
+                speechText.innerText = "You have to tell me your name first. Clean, simple, beautiful name. Enter it above!";
+                avatar.style.display = "none";
+                return;
+            }
+
+            // Select a random welcome template
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            let selectedQuote = quotes[randomIndex];
+            
+            // Inject the guest's name into the speech template
+            let customizedSpeech = selectedQuote.replace(/\[NAME\]/g, nameInput);
+            
+            // Display the text and trigger the animation style
+            speechText.innerText = customizedSpeech;
+            avatar.style.display = "block";
+
+            // Optional: Use Web Speech API for an audio reading effect
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(customizedSpeech);
+                
+                // Try to find a fitting voice or fallback naturally
+                const voices = window.speechSynthesis.getVoices();
+                // A lower pitch and deliberate rate loosely mimics a distinct oratorical delivery style
+                utterance.rate = 0.85; 
+                utterance.pitch = 0.9; 
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Allow pressing 'Enter' in the input box to trigger the greeting
+        document.getElementById('guestName').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                welcomeGuest();
+            }
+        });
+    </script>
+</body>
+</html>
